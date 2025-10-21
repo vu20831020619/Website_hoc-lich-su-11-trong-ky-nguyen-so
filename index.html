@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Học Lịch sử 11 trong Kỷ nguyên số</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: #f8f6f2;
+        }
+        .nav-item {
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        .nav-item:hover, .nav-item.active {
+            color: #d97706; /* amber-600 */
+            background-color: #fef3c7; /* amber-100 */
+        }
+        .content-section {
+            display: none;
+            min-height: 80vh;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .lesson-select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg>%");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+        /* New Glossary Card Styling */
+        .term-container {
+            display: flex;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            align-items: stretch; /* Đảm bảo cả hai cột có cùng chiều cao */
+        }
+        .term-card-key {
+            padding: 1rem;
+            flex-basis: 35%;
+            flex-shrink: 0; /* Không co lại */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-weight: 700;
+            color: white;
+            line-height: 1.3;
+        }
+        .term-card-def {
+            padding: 1rem;
+            flex-basis: 65%;
+            flex-grow: 1; /* Mở rộng để lấp đầy phần còn lại */
+            background-color: white;
+            display: flex;
+            align-items: center;
+            color: #4b5563; /* gray-600 */
+        }
+        /* End New Glossary Card Styling */
+
+        .quiz-option {
+            transition: background-color 0.3s ease;
+        }
+        .quiz-option.selected {
+            background-color: #fbbf24;
+        }
+        .quiz-option.correct {
+            background-color: #4ade80;
+        }
+        .quiz-option.incorrect {
+            background-color: #f87171;
+        }
+        .dl-select-container {
+            position: relative;
+        }
+        .tool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px -5px rgba(0,0,0,0.1);
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .gdrive-link {
+            transition: background-color 0.3s;
+        }
+        /* Style cho Link Công cụ AI trong Tool Card */
+        .tool-link {
+            font-weight: 600; /* semi-bold */
+            color: #d97706; /* amber-600 */
+            transition: color 0.2s;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+        .tool-link:hover {
+            color: #b45309; /* amber-700 dark */
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="bg-[#f8f6f2] text-gray-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#" class="font-bold text-xl md:text-2xl text-amber-700 whitespace-nowrap" onclick="showSection('home')">
+                Lịch sử 11 Kỷ nguyên số
+            </a>
+            <div class="hidden md:flex items-center space-x-1 overflow-x-auto">
+                <a href="#" class="nav-item px-3 py-2 rounded-md text-sm font-medium" onclick="showSection('home', this)">Trang chủ</a>
+                <a href="#" class="nav-item px-3 py-2 rounded-md text-sm font-medium" onclick="showSection('infographic', this)">Infographic</a>
+                <a href="#" class="nav-item px-3 py-2 rounded-md text-sm font-medium" onclick="showSection('mindmap', this)">Mindmap</a>
+                <a href="#" class="nav-item px-3 py-2 rounded-md text-sm font-medium" onclick="showSection('digital-learning', this)">Học liệu số</a>
+                <a href="#" class="nav-item px-3 py-2 rounded-md text-sm font-medium" onclick="showSection('glossary', this)">Thuật ngữ</a>
+                <a href="#" class="nav-item px-3 py-2 rounded-md text-sm font-medium" onclick="showSection('quiz', this)">Trắc nghiệm</a>
+                <a href="#" class="nav-item px-3 py-2 rounded-md text-sm font-medium" onclick="showSection('games', this)">Trò chơi</a>
+                <a href="#" class="nav-item px-3 py-2 rounded-md text-sm font-medium" onclick="showSection('digital-channels', this)">Kênh thông tin số</a>
+                <a href="#" class="nav-item px-3 py-2 rounded-md text-sm font-medium" onclick="showSection('digital-tools', this)">Công cụ số</a>
+                <a href="#" class="nav-item px-3 py-2 rounded-md text-sm font-medium" onclick="showSection('exhibition', this)">Triển lãm ảo</a>
+                <a href="#" class="nav-item px-3 py-2 rounded-md text-sm font-medium" onclick="showSection('qa', this)">Hỏi đáp</a>
+                <a href="#" class="nav-item px-3 py-2 rounded-md text-sm font-medium" onclick="showSection('contact', this)">Liên hệ</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="md:hidden hidden px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-inner">
+            <a href="#" class="block nav-item px-3 py-2 rounded-md text-base font-medium" onclick="showSection('home', this)">Trang chủ</a>
+            <a href="#" class="block nav-item px-3 py-2 rounded-md text-base font-medium" onclick="showSection('infographic', this)">Infographic</a>
+            <a href="#" class="block nav-item px-3 py-2 rounded-md text-base font-medium" onclick="showSection('mindmap', this)">Mindmap</a>
+            <a href="#" class="block nav-item px-3 py-2 rounded-md text-base font-medium" onclick="showSection('digital-learning', this)">Học liệu số</a>
+            <a href="#" class="block nav-item px-3 py-2 rounded-md text-base font-medium" onclick="showSection('glossary', this)">Thuật ngữ</a>
+            <a href="#" class="block nav-item px-3 py-2 rounded-md text-base font-medium" onclick="showSection('quiz', this)">Trắc nghiệm</a>
+            <a href="#" class="block nav-item px-3 py-2 rounded-md text-base font-medium" onclick="showSection('games', this)">Trò chơi</a>
+            <a href="#" class="block nav-item px-3 py-2 rounded-md text-base font-medium" onclick="showSection('digital-channels', this)">Kênh thông tin số</a>
+            <a href="#" class="block nav-item px-3 py-2 rounded-md text-base font-medium" onclick="showSection('digital-tools', this)">Công cụ số</a>
+            <a href="#" class="block nav-item px-3 py-2 rounded-md text-base font-medium" onclick="showSection('exhibition', this)">Triển lãm ảo</a>
+            <a href="#" class="block nav-item px-3 py-2 rounded-md text-base font-medium" onclick="showSection('qa', this)">Hỏi đáp</a>
+            <a href="#" class="block nav-item px-3 py-2 rounded-md text-base font-medium" onclick="showSection('contact', this)">Liên hệ</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-6">
+        <!-- Vị trí hiển thị bộ đếm -->
+        <div id="visit-counter-display" class="fixed bottom-4 right-4 bg-amber-600 text-white text-sm py-2 px-4 rounded-full shadow-lg z-50 hidden">
+            Lượt truy cập trang: <span id="page-visits">0</span>
+        </div>
+
+        <!-- Trang chủ -->
+        <section id="home" class="content-section active">
+            <div class="bg-white p-8 rounded-xl shadow-xl text-center">
+                <h1 class="text-4xl font-bold text-amber-800 mb-4">Chào mừng đến với "Học Lịch sử 11 trong Kỷ nguyên số"</h1>
+                <p class="text-lg text-gray-600 mb-6">
+                    Đây là không gian học tập tương tác, nơi kiến thức lịch sử được truyền tải một cách sinh động và đa chiều thông qua các học liệu số.
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 text-left">
+                    <div class="bg-amber-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-xl mb-2 text-amber-700">Kiến thức chuyên biệt</h3>
+                        <p>Nắm vững chương trình Lịch sử 11 (Chân trời sáng tạo) qua Infographic và Mindmap trực quan, Học liệu số phong phú.</p>
+                    </div>
+                    <div class="bg-teal-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-xl mb-2 text-teal-700">Tư duy phản biện</h3>
+                        <p>Phát triển khả năng phân tích, tổng hợp và liên hệ, giải quyết các vấn đề thời sự thông qua các nguồn thông tin chính thống.</p>
+                    </div>
+                    <div class="bg-rose-50 p-6 rounded-lg">
+                        <h3 class="font-bold text-xl mb-2 text-rose-700">Khung năng lực số</h3>
+                        <p>Thành thạo kỹ năng tìm kiếm, đánh giá nguồn tài liệu, thực hiện các dự án số và trở thành công dân số tích cực.</p>
+                    </div>
+                </div>
+                <button class="mt-8 bg-amber-600 text-white font-bold py-3 px-6 rounded-full shadow-lg hover:bg-amber-700 transition-colors" onclick="showSection('mindmap')">
+                    Bắt đầu khám phá
+                </button>
+            </div>
+        </section>
+
+        <!-- Infographic -->
+        <section id="infographic" class="content-section">
+            <h2 class="text-3xl font-bold mb-6 text-center text-amber-800">Infographic - Tổng quan bài học</h2>
+            <p class="text-center text-gray-600 mb-8">Trực quan hóa kiến thức cốt lõi của từng bài học qua những hình ảnh sống động, dễ hiểu và dễ nhớ.</p>
+            <div class="bg-white p-6 rounded-xl shadow-xl">
+                <label for="infographic-lesson-select" class="block text-sm font-medium text-gray-700 mb-2">Chọn bài học:</label>
+                <select id="infographic-lesson-select" class="lesson-select w-full p-3 border border-gray-300 rounded-md bg-white shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-200 focus:ring-opacity-50"></select>
+                <div id="infographic-content" class="mt-6 text-center">
+                    <p>Vui lòng chọn một bài học để xem Infographic.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mindmap (Trang phụ độc lập) -->
+        <section id="mindmap" class="content-section">
+            <h2 class="text-3xl font-bold mb-6 text-center text-amber-800">Mindmap - Sơ đồ tư duy</h2>
+            <p class="text-center text-gray-600 mb-8">Hệ thống hóa kiến thức một cách logic, giúp bạn nhìn thấy mối liên kết giữa các sự kiện, nhân vật và khái niệm.</p>
+            <div class="bg-white p-6 rounded-xl shadow-xl">
+                <label for="mindmap-lesson-select" class="block text-sm font-medium text-gray-700 mb-2">Chọn bài học:</label>
+                <select id="mindmap-lesson-select" class="lesson-select w-full p-3 border border-gray-300 rounded-md bg-white shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-200 focus:ring-opacity-50"></select>
+                <div id="mindmap-content" class="mt-6 text-center">
+                    <p>Vui lòng chọn một bài học để xem Mindmap.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Học liệu số (Trang phụ độc lập) - Giao diện 1 Dropdown -->
+        <section id="digital-learning" class="content-section">
+            <h2 class="text-3xl font-bold mb-6 text-center text-amber-800">Học liệu số (Hình ảnh & Video)</h2>
+            <p class="text-center text-gray-600 mb-8">Chọn loại học liệu để xem tất cả tư liệu Hình ảnh hoặc Video được tổng hợp từ các bài học.</p>
+            <div class="bg-white p-6 rounded-xl shadow-xl">
+                <!-- Media Type Dropdown (Chỉ giữ lại Dropdown này) -->
+                <div class="dl-select-container mb-6 w-full max-w-lg mx-auto">
+                    <label for="dl-media-select" class="block text-lg font-medium text-gray-700 mb-2 text-center">Chọn loại học liệu:</label>
+                    <select id="dl-media-select" class="lesson-select w-full p-3 border border-gray-300 rounded-md bg-white shadow-sm text-center focus:border-amber-500 focus:ring focus:ring-amber-200 focus:ring-opacity-50">
+                        <option value="images">🖼️ Hình ảnh (Tổng hợp)</option>
+                        <option value="videos">🎥 Video (Tổng hợp)</option>
+                    </select>
+                </div>
+                
+                <div id="digital-learning-content" class="mt-6 min-h-[50vh]">
+                    <!-- Nội dung hình ảnh/video sẽ được hiển thị ở đây -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Thuật ngữ (Trang phụ độc lập) - Giao diện mới -->
+        <section id="glossary" class="content-section">
+            <h2 class="text-3xl font-bold mb-6 text-center text-amber-800">Thuật ngữ Lịch sử</h2>
+            <p class="text-center text-gray-600 mb-8">Nắm vững các khái niệm, thuật ngữ quan trọng với giao diện tra cứu trực quan.</p>
+            
+            <div class="bg-white p-6 rounded-xl shadow-xl">
+                <input type="text" id="glossary-search" placeholder="Tìm kiếm thuật ngữ..." class="w-full p-3 border border-gray-300 rounded-md mb-6 focus:ring-amber-500 focus:border-amber-500">
+                <div id="glossary-content" class="space-y-4">
+                    <!-- Content generated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Trắc nghiệm (Trang phụ độc lập) -->
+        <section id="quiz" class="content-section">
+            <h2 class="text-3xl font-bold mb-6 text-center text-amber-800">Trắc nghiệm kiến thức</h2>
+            <p class="text-center text-gray-600 mb-8">Kiểm tra và củng cố kiến thức đã học qua các câu hỏi trắc nghiệm bám sát nội dung bài học.</p>
+            <div class="bg-white p-6 rounded-xl shadow-xl">
+                <div id="quiz-selection-view">
+                    <label for="quiz-lesson-select" class="block text-sm font-medium text-gray-700 mb-2">Chọn bài học để làm trắc nghiệm:</label>
+                    <select id="quiz-lesson-select" class="lesson-select w-full p-3 border border-gray-300 rounded-md bg-white shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-200 focus:ring-opacity-50"></select>
+                    <button id="start-quiz-btn" class="mt-4 w-full bg-amber-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-amber-700 transition-colors">Bắt đầu</button>
+                </div>
+                <div id="quiz-main-view" class="hidden">
+                    <h3 id="quiz-lesson-title" class="text-xl font-bold mb-4"></h3>
+                    <div id="quiz-question-container"></div>
+                    <div id="quiz-result-container" class="text-center hidden"></div>
+                    <div class="flex justify-between mt-6">
+                        <button id="quiz-back-btn" class="bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg hover:bg-gray-400">Quay lại</button>
+                        <button id="quiz-next-btn" class="bg-amber-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-amber-700">Câu tiếp theo</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Trò chơi (Trang phụ độc lập) -->
+        <section id="games" class="content-section">
+            <h2 class="text-3xl font-bold mb-6 text-center text-amber-800">Trò chơi tương tác</h2>
+            <p class="text-center text-gray-600 mb-8">"Học mà chơi, chơi mà học" - Củng cố kiến thức qua các trò chơi lịch sử thú vị.</p>
+            <div class="bg-white p-6 rounded-xl shadow-xl">
+                <label for="game-lesson-select" class="block text-sm font-medium text-gray-700 mb-2">Chọn bài học để chơi:</label>
+                <select id="game-lesson-select" class="lesson-select w-full p-3 border border-gray-300 rounded-md bg-white shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-200 focus:ring-opacity-50"></select>
+                <div id="game-content" class="mt-6">
+                     <p class="text-center">Vui lòng chọn một bài học để bắt đầu trò chơi.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kênh thông tin số -->
+        <section id="digital-channels" class="content-section">
+            <div class="bg-white p-8 rounded-xl shadow-xl">
+                <h2 class="text-3xl font-bold mb-2 text-center text-amber-800">Kênh thông tin số - Phát triển năng lực tìm kiếm</h2>
+                <p class="text-center text-gray-600 mb-8">Rèn luyện năng lực số bằng cách khai thác thông tin từ các nguồn học liệu uy tín và chính thống.</p>
+                
+                <div class="max-w-2xl mx-auto mb-8">
+                    <div class="relative">
+                        <input type="text" placeholder="Tìm kiếm sự kiện, nhân vật, hoặc khái niệm lịch sử..." class="w-full py-3 pl-4 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <svg class="w-6 h-6 absolute right-4 top-1/2 -translate-y-1/2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </div>
+                    <div class="flex justify-center space-x-4 mt-4 text-sm text-gray-600">
+                        <button class="flex items-center space-x-1 py-1 px-3 border rounded-full hover:bg-amber-100 transition-colors">
+                           <span class="text-lg">🏛️</span> <span>Bảo tàng</span>
+                        </button>
+                         <button class="flex items-center space-x-1 py-1 px-3 border rounded-full hover:bg-amber-100 transition-colors">
+                           <span class="text-lg">📜</span> <span>Pháp luật</span>
+                        </button>
+                         <button class="flex items-center space-x-1 py-1 px-3 border rounded-full hover:bg-amber-100 transition-colors">
+                           <span class="text-lg">🌐</span> <span>Quốc tế</span>
+                        </button>
+                         <button class="flex items-center space-x-1 py-1 px-3 border rounded-full hover:bg-amber-100 transition-colors">
+                           <span class="text-lg">📚</span> <span>Học thuật</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 text-center hover:shadow-lg transition-shadow">
+                        <h3 class="font-bold text-lg text-teal-800 mb-2">Bảo tàng & Di tích Lịch sử</h3>
+                        <p class="text-sm text-gray-600 mb-3">Tìm hiểu các hiện vật, hình ảnh 3D và tài liệu trưng bày từ các bảo tàng hàng đầu Việt Nam. Nguồn tài liệu đáng tin cậy giúp các bạn hình dung rõ nét về quá khứ.</p>
+                        <a href="https://baotanglichsu.vn/" target="_blank" class="text-sm text-amber-600 font-semibold hover:underline block mt-2">Bảo tàng Lịch sử Quốc gia &rarr;</a>
+                        <a href="https://baotanghochiminh.com/" target="_blank" class="text-sm text-amber-600 font-semibold hover:underline block">Bảo tàng Hồ Chí Minh &rarr;</a>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 text-center hover:shadow-lg transition-shadow">
+                        <h3 class="font-bold text-lg text-blue-800 mb-2">Văn bản Pháp luật và Chính sách</h3>
+                        <p class="text-sm text-gray-600 mb-3">Truy cập các văn bản pháp luật, nghị quyết, thông tư liên quan đến chủ quyền, kinh tế và đối ngoại. Nguồn này rất cần thiết để làm rõ các vấn đề thời sự như Biển Đông.</p>
+                        <a href="https://chinhphu.vn/" target="_blank" class="text-sm text-amber-600 font-semibold hover:underline block mt-2">Cổng TTĐT Chính phủ &rarr;</a>
+                        <a href="https://vanban.chinhphu.vn/" target="_blank" class="text-sm text-amber-600 font-semibold hover:underline block">Hệ thống VBPL &rarr;</a>
+                        <a href="https://www.mofa.gov.vn/" target="_blank" class="text-sm text-amber-600 font-semibold hover:underline block">Bộ Ngoại giao Việt Nam &rarr;</a>
+                    </div>
+                     <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 text-center hover:shadow-lg transition-shadow">
+                        <h3 class="font-bold text-lg text-indigo-800 mb-2">Tổ chức Quốc tế</h3>
+                        <p class="text-sm text-gray-600 mb-3">Tìm kiếm các báo cáo, tài liệu phân tích từ các tổ chức quốc tế lớn. Các nguồn này giúp các bạn hiểu rõ hơn về các xu thế kinh tế, văn hóa và xã hội trên thế giới.</p>
+                        <a href="https://www.unesco.org/en" target="_blank" class="text-sm text-amber-600 font-semibold hover:underline block mt-2">UNESCO &rarr;</a>
+                        <a href="https://www.imf.org/en/home" target="_blank" class="text-sm text-amber-600 font-semibold hover:underline block">IMF &rarr;</a>
+                        <a href="https://asean.org/" target="_blank" class="text-sm text-amber-600 font-semibold hover:underline block">ASEAN &rarr;</a>
+                        <a href="https://www.worldbank.org/" target="_blank" class="text-sm text-amber-600 font-semibold hover:underline block">Ngân hàng Thế giới (WB) &rarr;</a>
+                    </div>
+                    <div class="border border-gray-200 rounded-lg p-4 bg-gray-50 text-center hover:shadow-lg transition-shadow">
+                        <h3 class="font-bold text-lg text-rose-800 mb-2">Kho học liệu và Tài nguyên số</h3>
+                        <p class="text-sm text-gray-600 mb-3">Khám phá các bài báo khoa học, luận văn và tài liệu nghiên cứu chuyên sâu. Đây là nguồn tuyệt vời để thực hiện các dự án học thuật và nâng cao kiến thức.</p>
+                        <a href="https://scholar.google.com/" target="_blank" class="text-sm text-amber-600 font-semibold hover:underline block mt-2">Google Scholar &rarr;</a>
+                        <a href="https://nlv.gov.vn/" target="_blank" class="text-sm text-amber-600 font-semibold hover:underline block">Thư viện Quốc gia &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Công cụ số (Trang phụ độc lập) - Giao diện mới -->
+        <section id="digital-tools" class="content-section">
+            <div class="bg-white p-8 rounded-xl shadow-xl">
+                <h2 class="text-3xl font-bold mb-2 text-center text-amber-800">Công cụ số - Tăng cường năng lực sáng tạo</h2>
+                <p class="text-center text-gray-600 mb-8">Sử dụng các công cụ AI và nền tảng số hiện đại để tìm kiếm, phân tích, và tạo ra các sản phẩm học tập độc đáo.</p>
+
+                <div class="max-w-xl mx-auto mb-8">
+                    <label for="tool-group-select" class="block text-sm font-medium text-gray-700 mb-2 text-center">Chọn nhóm công cụ AI:</label>
+                    <select id="tool-group-select" class="lesson-select w-full p-3 border border-gray-300 rounded-md bg-white shadow-sm focus:border-amber-500 focus:ring focus:ring-amber-200 focus:ring-opacity-50">
+                        <option value="search">1. Tìm kiếm thông tin & Phân tích</option>
+                        <option value="mindmap">2. Tạo sơ đồ tư duy (Mindmap)</option>
+                        <option value="postcard">3. Tạo Postcard/Tài liệu</option>
+                        <option value="voice">4. Tạo giọng nói (TTS)</option>
+                        <option value="video">5. Tạo Video & Truyện tranh</option>
+                        <option value="game">6. Tạo trò chơi tương tác</option>
+                        <option value="slide">7. Tạo Slide/Bản trình bày</option>
+                        <option value="motion">8. Tạo chuyển động nhân vật</option>
+                    </select>
+                </div>
+
+                <div id="digital-tools-content" class="min-h-[40vh]">
+                    <p class="text-center text-gray-500 italic mt-12">Vui lòng chọn một nhóm công cụ từ hộp thả xuống để xem chi tiết.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Triển lãm ảo -->
+        <section id="exhibition" class="content-section">
+            <h2 class="text-3xl font-bold mb-2 text-center text-amber-800">Triển lãm ảo - Các sản phẩm số của học sinh</h2>
+            <p class="text-center text-gray-600 mb-8">Nơi trưng bày các sản phẩm số sáng tạo của học sinh - kết quả của quá trình học tập và nghiên cứu. Gồm 13 bài tiêu biểu.</p>
+            <div id="exhibition-gallery" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            </div>
+        </section>
+
+        <!-- Hỏi đáp -->
+        <section id="qa" class="content-section">
+            <h2 class="text-3xl font-bold mb-6 text-center text-amber-800">Hỏi đáp cùng Chatbot Lịch sử</h2>
+            <p class="text-center text-gray-600 mb-8">Có câu hỏi nào cần giải đáp ngay? Hãy hỏi trợ lý ảo của chúng tôi!</p>
+            <div class="max-w-2xl mx-auto bg-white p-6 rounded-xl shadow-xl">
+                <div id="chat-window" class="border border-gray-200 rounded-lg p-4 mb-4 overflow-y-auto bg-gray-50">
+                    <div class="chat-message mb-2">
+                        <span class="font-bold text-amber-700">Bot:</span>
+                        <span class="text-gray-800">Xin chào! Tôi có thể giúp gì cho bạn về Lịch sử 11?</span>
+                    </div>
+                </div>
+                <div class="flex">
+                    <input type="text" id="chat-input" class="flex-grow border border-gray-300 rounded-l-lg p-2 focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Nhập câu hỏi của bạn...">
+                    <button id="chat-send" class="bg-amber-600 text-white font-bold px-4 rounded-r-lg hover:bg-amber-700">Gửi</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Liên hệ -->
+        <section id="contact" class="content-section">
+            <div class="bg-white p-8 rounded-xl shadow-xl text-center">
+                <h2 class="text-3xl font-bold mb-4 text-amber-800">Liên hệ với giáo viên</h2>
+                <p class="text-gray-600 mb-8">Nếu có bất kỳ thắc mắc nào, đừng ngần ngại kết nối với giáo viên qua các kênh dưới đây.</p>
+                <div class="flex flex-col items-center justify-center space-y-6">
+                    <div class="flex items-center text-lg p-3 bg-green-50 rounded-lg shadow-sm w-full max-w-sm justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                        <span class="font-semibold text-gray-800">Zalo: 0935186740</span>
+                    </div>
+                    <div class="flex items-center text-lg p-3 bg-red-50 rounded-lg shadow-sm w-full max-w-sm justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-red-600" viewBox="0 0 20 20" fill="currentColor">
+                          <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                          <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                        </svg>
+                        <div class="flex flex-col items-start">
+                           <span class="font-semibold text-gray-800">vubaonguyen9612@gmail.com</span>
+                           <span class="font-semibold text-gray-800">20831020619@hcmussh.edu.vn</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sections = document.querySelectorAll('.content-section');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        const lessonData = {
+            'lesson1': { id: 'L1', title: 'Bài 1: Một số vấn đề chung về cách mạng tư sản', color: 'bg-blue-100', textColor: 'text-blue-800' },
+            'lesson2': { id: 'L2', title: 'Bài 2: Chủ nghĩa xã hội từ 1917 đến nay', color: 'bg-red-100', textColor: 'text-red-800' },
+            'lesson3': { id: 'L3', title: 'Bài 3: Quá trình giành độc lập dân tộc của các quốc gia Đông Nam Á', color: 'bg-green-100', textColor: 'text-green-800' },
+            'lesson4': { id: 'L4', title: 'Bài 4: ĐỔI MỚI CỦA VIỆT NAM', color: 'bg-yellow-100', textColor: 'text-yellow-800' },
+            'lesson5': { id: 'L5', title: 'Bài 5: Quá trình xâm lược và cai trị của chủ nghĩa thực dân...', color: 'bg-purple-100', textColor: 'text-purple-800' },
+            'lesson6': { id: 'L6', title: 'Bài 6: Hành trình đi đến độc lập dân tộc ở Đông Nam Á', color: 'bg-indigo-100', textColor: 'text-indigo-800' },
+            'lesson7': { id: 'L7', title: 'Bài 7: Chiến tranh bảo vệ Tổ quốc trong lịch sử Việt Nam', color: 'bg-pink-100', textColor: 'text-pink-800' },
+            'lesson8': { id: 'L8', title: 'Bài 8: Cách mạng tháng Tám năm 1945', color: 'bg-rose-100', textColor: 'text-rose-800' },
+            'lesson9': { id: 'L9', title: 'Bài 9: CUỘC CẢI CÁCH CỦA HỒ QUÝ LY VÀ TRIỀU HỒ', color: 'bg-cyan-100', textColor: 'text-cyan-800' },
+            'lesson10': { id: 'L10', title: 'Bài 10: Cuộc kháng chiến chống thực dân Pháp xâm lược', color: 'bg-lime-100', textColor: 'text-lime-800' },
+            'lesson11': { id: 'L11', title: 'Bài 11: Cuộc kháng chiến chống Mỹ, cứu nước', color: 'bg-orange-100', textColor: 'text-orange-800' },
+            'lesson12': { id: 'L12', title: 'Bài 12: Vị trí và tầm quan trọng của Biển Đông', color: 'bg-sky-100', textColor: 'text-sky-800' },
+            'lesson13': { id: 'L13', title: 'Bài 13: Việt Nam và Biển Đông', color: 'bg-teal-100', textColor: 'text-teal-800' }
+        };
+
+        // Hàm chung để tạo khối HTML cho link Google Drive
+        function createDriveVideoBlock(url, title) {
+            return {
+                content: `<div class="mt-4"><a href="${url.trim()}" target="_blank" class="block p-3 bg-red-100 text-red-700 font-medium rounded-lg hover:bg-red-200 transition-colors text-center shadow-sm gdrive-link">🎥 TƯ LIỆU: ${title.toUpperCase()} (Google Drive)</a></div>`, 
+                title: title
+            };
+        }
+
+        // Định nghĩa dữ liệu học liệu số (Video)
+        const digitalLearningVideos = {
+            lesson1: [
+                createDriveVideoBlock('https://drive.google.com/file/d/12UgB2N9WivElh3749dey1AVDn0tgHnw/view?usp=sharing', 'CÁCH MẠNG TƯ SẢN PHÁP'),
+                createDriveVideoBlock('https://drive.google.com/file/d/1h5pX5p5vbDdEd07DmqwstKFewPy3QZen/view?usp=sharing', 'DIỄN BIẾN CÁCH MẠNG TƯ SẢN ANH'),
+            ],
+            lesson2: [
+                { content: '<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>', title: 'Video: Lịch sử Xã hội chủ nghĩa' }
+            ],
+            lesson3: [
+                { content: '<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/XY8TOEYbnf4?si=3ubEbvtzKaOxZfhf" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>', title: "30 năm Việt Nam gia nhập ASEAN" },
+                createDriveVideoBlock('https://drive.google.com/file/d/1iDpv0_P4SXDcuCY4AiiLeZU1u47IhXHb/view?usp=sharing', 'CÁCH MẠNG CUBA 1959'),
+            ],
+            lesson4: [
+                createDriveVideoBlock('https://drive.google.com/file/d/16XbXVVRviPzjL8GIHmqUHjOsrv9npEhy/view?usp=sharing', 'ĐỔI MỚI CỦA VIỆT NAM'),
+            ],
+            lesson5: [
+                // Placeholder
+            ],
+            lesson6: [
+                createDriveVideoBlock('https://drive.google.com/file/d/1x9phWAweheWd79hOVhZx1RzVrAcPDID8/view?usp=sharing', 'QUÁ TRÌNH PHÁT TRIỂN CỦA ASEAN'),
+                createDriveVideoBlock('https://drive.google.com/file/d/1rzBMW0B7JOQ-52Vb_UDF6UaUvt4qPx9W/view?usp=sharing', 'CỘNG ĐỒNG KINH TẾ AEC'),
+            ],
+            lesson7: [
+                createDriveVideoBlock('https://drive.google.com/file/d/18Hxzzcd2FNDoeK7CHzJGS5cC-7Mhf-4x/view?usp=sharing', 'KHÁNG CHIẾN CHỐNG TỐNG'),
+                createDriveVideoBlock('https://drive.google.com/file/d/1xagSoONOEM4FTSFRtfsivr6h070gt6Y/view?usp=sharing', 'NAM QUỐC SƠN HÀ'),
+                createDriveVideoBlock('https://drive.google.com/file/d/1qOQ2IqyFXAL58026ir-01_86XrM5D4QI/view?usp=sharing', 'Quân Pháp gây hấn trên sông Hồng'),
+                createDriveVideoBlock('https://drive.google.com/file/d/1e52vGwD1xzEzPg91qDH1G95EskH57R/view?usp=sharing', 'QUÂN PHÁP CHIẾM THÀNH HÀ NỘI LẦN THỨ 2 NĂM 1882'),
+            ],
+            lesson8: [
+                createDriveVideoBlock('https://drive.google.com/file/d/1laQzYS4RJDLPkxUWXtw1zQ3V0nLfG1f/view?usp=sharing', 'NGHĨA QUÂN LAM SƠN CHIẾN THẮNG TỐT ĐỘNG, CHÚC ĐỘNG'),
+                createDriveVideoBlock('https://drive.google.com/file/d/1vUXbr5nTlnp5ccUNViylqi0sxXe4hTLu/view?usp=sharing', 'TIẾN VÀO NGHỆ AN'),
+                createDriveVideoBlock('https://drive.google.com/file/d/1sCOxqGswjtG7szG7b-vF-vuZMbP7qYbd/view?usp=sharing', 'BÌNH NGÔ ĐẠI CÁO_NGUYỄN TRÃI'),
+                createDriveVideoBlock('https://drive.google.com/file/d/1APjwo3zGHLPIDAL5iCnOZfK4evCf5zL5/view?usp=sharing', 'LÊ LAI CỨU CHÚA'),
+            ],
+            lesson9: [
+                createDriveVideoBlock('https://drive.google.com/file/d/1L6LzUTDIyw8pDSGcBVgK3LnVBC9dVyX9/view?usp=sharing', 'Hồ Qúy Ly và cải cách giáo dục'),
+            ],
+            lesson10: [
+                // Placeholder
+            ],
+            lesson11: [
+                // Placeholder
+            ],
+            lesson12: [
+                // Placeholder
+            ],
+            lesson13: [
+                createDriveVideoBlock('https://drive.google.com/file/d/17nIqFJzafX5XqvP5NKhuD8nOsh0Z-XYg/view?usp=sharing', 'LỊCH SỬ CHỦ QUYỀN BIỂN ĐẢO VIỆT NAM'),
+                createDriveVideoBlock('https://drive.google.com/file/d/1nz_M9TNlapJu4SgktL6iesphFX56WjHE/view?usp=sharing', 'CHỨNG CỨ PHÁP LÝ 2 QUẦN ĐẢO HOÀNG SA, TRƯỜNG SA CỦA VIỆT NAM'),
+            ]
+        };
+        
+        const contentDB = {
+            infographic: {
+                lesson1: 'https://placehold.co/800x600/e0f2fe/0c4a6e?text=Infographic+Bai+1',
+                lesson2: 'https://placehold.co/800x600/fee2e2/991b1b?text=Infographic+Bai+2',
+                lesson3: 'https://placehold.co/800x600/dcfce7/166534?text=Infographic+Bai+3',
+            },
+            mindmap: {
+                lesson1: 'https://placehold.co/800x600/e0f2fe/0c4a6e?text=Mindmap+Bai+1',
+                lesson2: 'https://placehold.co/800x600/fee2e2/991b1b?text=Mindmap+Bai+2',
+                lesson3: 'https://placehold.co/800x600/dcfce7/166534?text=Mindmap+Bai+3',
+            },
+            digitalLearning: { 
+                lesson1: {
+                    images: [
+                        { url: 'https://placehold.co/600x400/e0f2fe/0c4a6e?text=Hinh+anh+1.1+(Cach+mang+tu+san)', title: 'Hình ảnh 1.1: Cách mạng tư sản' }, 
+                        { url: 'https://placehold.co/600x400/e0f2fe/0c4a6e?text=Hinh+anh+1.2+(Tu+lieu+goc)', title: 'Hình ảnh 1.2: Tư liệu gốc' }
+                    ],
+                    videos: digitalLearningVideos.lesson1
+                },
+                lesson2: {
+                    images: [{ url: 'https://placehold.co/600x400/fee2e2/991b1b?text=Hinh+anh+2.1+(Chu+nghia+XH)', title: 'Hình ảnh 2.1: Chủ nghĩa xã hội' }],
+                    videos: digitalLearningVideos.lesson2
+                },
+                lesson3: {
+                    images: [
+                        { url: 'https://placehold.co/600x400/dcfce7/166534?text=Hinh+anh+3.1+(Dong+Nam+A)', title: 'Hình ảnh 3.1: Đông Nam Á' }, 
+                        { url: 'https://placehold.co/600x400/dcfce7/166534?text=Hinh+anh+3.2', title: 'Hình ảnh 3.2: Tư liệu lịch sử' }
+                    ],
+                    videos: digitalLearningVideos.lesson3
+                },
+                lesson4: { images: [], videos: digitalLearningVideos.lesson4 },
+                lesson5: { images: [], videos: digitalLearningVideos.lesson5 },
+                lesson6: { images: [], videos: digitalLearningVideos.lesson6 },
+                lesson7: { images: [], videos: digitalLearningVideos.lesson7 },
+                lesson8: { images: [], videos: digitalLearningVideos.lesson8 },
+                lesson9: { images: [{ url: 'https://placehold.co/600x400/22d3ee/0891b2?text=Hinh+anh+9.1', title: 'Hình ảnh 9.1: Tư liệu giải phóng' }], videos: digitalLearningVideos.lesson9 },
+                lesson10: { images: [], videos: digitalLearningVideos.lesson10 },
+                lesson11: { images: [], videos: digitalLearningVideos.lesson11 },
+                lesson12: { images: [], videos: digitalLearningVideos.lesson12 },
+                lesson13: { images: [], videos: digitalLearningVideos.lesson13 }
+            }
+        };
+
+        // --- Bổ sung Logic Tổng hợp Học liệu ---
+        let allAggregatedImages = [];
+        let allAggregatedVideos = [];
+        
+        // Cập nhật lại logic tổng hợp để bao gồm tất cả các bài
+        for (const key in lessonData) {
+            const lesson = lessonData[key];
+            const media = contentDB.digitalLearning[key];
+            
+            if (media) {
+                // Aggregate Images
+                media.images.forEach(img => {
+                    allAggregatedImages.push({
+                        url: img.url,
+                        title: img.title,
+                        lesson: lesson.title,
+                        color: lesson.color,
+                        textColor: lesson.textColor
+                    });
+                });
+
+                // Aggregate Videos
+                media.videos.forEach(vid => {
+                    allAggregatedVideos.push({
+                        content: vid.content,
+                        title: vid.title,
+                        lesson: lesson.title,
+                        color: lesson.color,
+                        textColor: lesson.textColor
+                    });
+                });
+            }
+        }
+        // --- End Logic Tổng hợp ---
+
+        // Dữ liệu Thuật ngữ từ PDF đã được cập nhật
+        const glossaryTerms = [
+            // Cập nhật màu sắc cho nền đậm (ví dụ: bg-blue-600)
+            { term: "AEC (ASEAN Economic Community)", def: "Cộng đồng Kinh tế ASEAN.", color: "bg-blue-600" },
+            { term: "APSC (ASEAN Political - Security Community)", def: "Cộng đồng An ninh - Chính tri ASEAN.", color: "bg-indigo-600" },
+            { term: "ASCC (ASEAN Socio Cultural Community)", def: "Cộng đồng Văn hoá - Xã hội ASEAN.", color: "bg-purple-600" },
+            { term: "Cách mạng tư sản", def: "Cách mạng do giai cấp tư sản (hay quý tộc mới) lãnh đạo nhằm xoá bỏ chế độ chuyên chế, thiết lập nền thống trị của giai cấp tư sản, mở đường cho sự phát triển của chủ nghĩa tư bản.", color: "bg-red-600" },
+            { term: "Cải tổ", def: "Những thay đổi cơ bản và toàn diện về tổ chức, thể chế, cơ chế,... trong mọi lĩnh vực nhằm khắc phục những sai lầm trong quá khứ để đưa đất nước tiến lên.", color: "bg-orange-600" },
+            { term: "Cửu khanh", def: "Đứng đầu một cơ quan chủ yếu trong bộ máy nhà nước phương Đông cổ đại; chín vị quan đứng đầu các cơ quan chủ yếu trong triều.", color: "bg-yellow-600" },
+            { term: "Chế độ đình nghị", def: "Thể thức tham gia bàn việc nước (việc quốc gia quan yếu, tuyển chọn quan chức theo yêu cầu công vụ, duyệt lại các bản án quan trọng) trước khi trình lên vua quyết định áp dụng từ thời vua Minh Mạng.", color: "bg-lime-600" },
+            { term: "Chiến tranh giải phóng", def: "Chiến tranh chính nghĩa, nhằm giành lại độc lập, thoát khỏi sự chiếm đóng, cai trị của ngoại bang.", color: "bg-green-600" },
+            { term: "Chủ nghĩa đế quốc", def: "Giai đoạn tiếp sau giai đoạn tự do cạnh tranh của chủ nghĩa tư bản. Đặc trưng chủ yếu là sự tập trung sản xuất và tư bản, sự thống trị của các công ty độc quyền chi phối toàn bộ đời sống kinh tế, chính trị của một nước; sự phân chia thuộc địa giữa các đế quốc.", color: "bg-teal-600" },
+            { term: "Chủ nghĩa tư bản", def: "Hệ thống chính trị, kinh tế, xã hội được thiết lập sau chế độ phong kiến, dựa trên sở hữu tư nhân, hoạt động sản xuất vì lợi nhuận.", color: "bg-cyan-600" },
+            { term: "Chủ nghĩa thực dân", def: "Quá trình một quốc gia (tư bản) nắm quyền kiểm soát chính trị hoàn toàn hoặc một phần đối với một quốc gia, vùng lãnh thổ; khai thác, bóc lột thuộc địa, áp đặt ngôn ngữ và văn hoá lên người dân các quốc gia thuộc địa.", color: "bg-sky-600" },
+            { term: "Đảng Cộng sản", def: "Chính đảng của giai cấp công nhân, lấy chủ nghĩa Mác - Lê-nin làm nền tảng tư tưởng và kim chỉ nam cho hành động, lấy nguyên tắc tập trung dân chủ làm nguyên tắc tổ chức cơ bản của mình.", color: "bg-blue-700" },
+            { term: "Địa chiến lược", def: "Sự cân nhắc chiến nghệ thuật kiểm soát và khai thác nhân tố địa lí (thường là của một quốc gia) kết hợp với môi trường, bối cảnh chính trị, kinh tế quốc tế trong hoạch định và thực thi chiến lược phát triển quốc gia, sao cho những lợi ích của một quốc gia được đảm bảo để tăng thế và lực của mình trên trường quốc tế.", color: "bg-indigo-700" },
+            { term: "Đổi mới", def: "Một đường lối mới về giải pháp thay đổi nhằm thực hiện hiệu quả những mục tiêu phát triển đã được triển khai.", color: "bg-purple-700" },
+            { term: "Đường lối", def: "Những chuẩn tắc cơ bản về phương hướng, nhiệm vụ, phương châm, lực lượng, phương thức tổ chức thực tiễn về chính trị, kinh tế, văn hoá xã hội,... do một nhà nước, một đảng, một tổ chức chính trị - xã hội đề ra nhằm thực hiện một mục tiêu nhất định trong một thời kì nhất định.", color: "bg-red-700" },
+            { term: "Giáo phái", def: "Một bộ phận của một tôn giáo khi có sự phân hoá, như đạo Tin lành là một trong ba giáo phái của Cơ đốc giáo do Can-vanh cải cách và đề xướng ở Tây Âu thế kỉ XVI.", color: "bg-orange-700" },
+            { term: "Hiệp định", def: "Văn bản ngoại giao kí kết giữa hai nước hoặc nhiều nước xác định những vấn đề cụ thể đã thoả thuận, thống nhất thực thi. Hiệp định quan trọng dưới Hiệp ước.", color: "bg-yellow-700" },
+            { term: "Hiệp ước", def: "Văn bản pháp lí quan trọng do Chính phủ hai nước hoặc nhiều nước kí kết nhằm thực hiện những điều đã thoả thuận trong quan hệ giữa các nước và phải được Quốc hội phê chuẩn.", color: "bg-lime-700" },
+            { term: "Hoàng thân", def: "Những người có quan hệ họ hàng dòng tộc với nhà vua cùng trong hoàng tộc.", color: "bg-green-700" },
+            { term: "Kháng chiến", def: "Chiến đấu chống xâm lược, bảo vệ Tổ quốc.", color: "bg-teal-700" },
+            { term: "Khoan thư sức dân", def: "Khi đất nước ở trong thời bình, triều đình phải lo cho dân, vì nhân dân, vì lợi ích lâu dài cho nhân dân và dân tộc.", color: "bg-cyan-700" },
+            { term: "Khởi nghĩa", def: "Hình thức đấu tranh cao nhất của đông đảo nhân dân bị áp bức bóc lột, nổi lên lật đổ ách đô hộ của ngoại bang (hoặc giai cấp thống trị trong nước). Khởi nghĩa nổ ra khi mâu thuẫn cực kì sâu sắc, có sự chuẩn bị về tổ chức, lãnh đạo.", color: "bg-sky-700" },
+            { term: "Lũng đoạn (độc quyền)", def: "Sự tập trung vào tay mình mọi đặc quyền để từ đó khống chế và kiểm soát hoạt động sản xuất hoặc kinh doanh.", color: "bg-blue-800" },
+            { term: "Lưu quan", def: "Chức vụ do người Kinh nắm giữ để quản lí vùng các dân tộc thiểu số và tiến hành thu thuế như ở miền xuôi.", color: "bg-indigo-800" },
+            { term: "Mã Lai", def: "Tên gọi khác của Ma-lai-xi-a.", color: "bg-purple-800" },
+            { term: "Miến Điện", def: "Tên gọi khác của Mi-an-ma.", color: "bg-red-800" },
+            { term: "Nhà nước pháp quyền", def: "Nhà nước được tổ chức và hoạt động trong khuôn khổ pháp luật, phản ánh công lí, phù hợp với quyền tự nhiên của con người.", color: "bg-orange-800" },
+            { term: "Quan hệ sản xuất", def: "Quan hệ giữa người và người trong quá trình sản xuất ra của cải vật chất, thể hiện ở quan hệ với tư liệu sản xuất, của cải làm ra.", color: "bg-yellow-800" },
+            { term: "Sắc lệnh", def: "Văn bản quy phạm pháp luật hoặc văn bản pháp luật của người đứng đầu bộ máy nhà nước hay bộ máy pháp.", color: "bg-lime-800" },
+            { term: "Thanh dã", def: "Chính sách “vườn không nhà trống' trong thời kì chiến tranh, thường được các nước nhỏ sử dụng để chống lại đạo quân xâm lược hùng mạnh.", color: "bg-green-800" },
+            { term: "Thuộc địa", def: "Vùng đất hoặc quốc gia bị các nước khác (thực dân, đế quốc) xâm lược và thống trị, bị áp bức, bóc lột, mất hoàn toàn quyền độc lập về chính trị, kinh tế.", color: "bg-teal-800" },
+            { term: "Tiền đề", def: "Điều kiện cần thiết phải có trước để làm việc gì đó.", color: "bg-cyan-800" },
+            { term: "Tiên phát chế nhân", def: "Hành động tiến công trước để chế áp địch giành quyền chủ động trên chiến trường, phá vỡ thế chủ động, tiêu hao lực lượng và sức mạnh của đối phương.", color: "bg-sky-800" },
+            { term: "Tuyên ngôn", def: "Bản tuyên bố có tính chất cương lĩnh bày tỏ chủ kiến của một chính đảng, một tổ chức.", color: "bg-blue-900" },
+            { term: "Xiêm", def: "Quốc hiệu chính thức của Thái Lan từ năm 1782 đến năm 1939.", color: "bg-indigo-900" }
+        ];
+
+        
+        const chatBotData = {
+            "cách mạng tháng tám": "Cách mạng tháng Tám năm 1945 là một cuộc cách mạng giải phóng dân tộc, lật đổ ách thống trị của phát xít Nhật và thực dân Pháp, giành lại độc lập cho Việt Nam.",
+            "biển đông": "Biển Đông là một vùng biển chiến lược quan trọng. Việt Nam có đầy đủ bằng chứng lịch sử và cơ sở pháp lý để khẳng định chủ quyền của mình đối với hai quần đảo Hoàng Sa và Trường Sa.",
+            "chủ tịch hồ chí minh": "Chủ tịch Hồ Chí Minh (19/5/1890 – 2/9/1969) là vị lãnh tụ vĩ đại của dân tộc Việt Nam.",
+            "kháng chiến chống pháp": "Cuộc kháng chiến chống thực dân Pháp kéo dài từ 1945 đến 1954, kết thúc bằng chiến thắng Điện Biên Phủ.",
+            "kháng chiến chống mỹ": "Cuộc kháng chiến chống Mỹ, cứu nước (1954 - 1975) kết thúc bằng Đại thắng mùa Xuân năm 1975, thống nhất đất nước.",
+            "xin chào": "Xin chào! Tôi có thể giúp gì cho bạn về Lịch sử 11? Bạn có thể hỏi về các bài học, nhân vật, hoặc sự kiện.",
+            "cảm ơn": "Rất vui được giúp bạn!",
+            "default": "Xin lỗi, tôi chưa hiểu câu hỏi của bạn. Bạn có thể hỏi về Cách mạng tháng Tám, Biển Đông, Chủ tịch Hồ Chí Minh, kháng chiến chống Pháp, kháng chiến chống Mỹ..."
+        };
+        
+        // CẬP NHẬT DỮ LIỆU CÔNG CỤ SỐ VỚI LIÊN KẾT CHÍNH XÁC
+        const digitalTools = {
+            search: {
+                title: "1. Tìm kiếm thông tin & Phân tích",
+                desc: "Các công cụ AI giúp bạn tra cứu, tóm tắt và phân tích tài liệu lịch sử một cách nhanh chóng và hiệu quả.",
+                color: "bg-blue-50",
+                tools: [
+                    { name: 'ChatGPT', url: 'https://chat.openai.com/', icon: '💬', badge: 'AI Phổ biến', color: 'text-blue-600' },
+                    { name: 'Gemini', url: 'https://gemini.google.com/', icon: '✨', badge: 'AI của Google', color: 'text-indigo-600' },
+                    { name: 'Google Scholar', url: 'https://scholar.google.com/', icon: '🔎', badge: 'Nghiên cứu học thuật', color: 'text-green-600' }
+                ]
+            },
+            mindmap: {
+                title: "2. Tạo sơ đồ tư duy (Mindmap)",
+                desc: "Biến các bài học dài thành sơ đồ trực quan, giúp hệ thống hóa và ghi nhớ kiến thức tốt hơn.",
+                color: "bg-green-50",
+                tools: [
+                    { name: 'MindMeister', url: 'https://www.mindmeister.com/', icon: '🧠', badge: 'Mindmap chuyên nghiệp', color: 'text-green-600' },
+                    { name: 'Coggle', url: 'https://coggle.it/', icon: '🔗', badge: 'Sơ đồ đơn giản', color: 'text-teal-600' },
+                    { name: 'Notebook LM', url: 'https://notebooklm.google.com/', icon: '📝', badge: 'Hỗ trợ Nghiên cứu', color: 'text-amber-600' }
+                ]
+            },
+            postcard: {
+                title: "3. Tạo Postcard/Tài liệu",
+                desc: "Thiết kế các ấn phẩm nhỏ gọn, đẹp mắt để chia sẻ kiến thức hoặc làm bài tập nhóm.",
+                color: "bg-yellow-50",
+                tools: [
+                    { name: 'Notebook LM', url: 'https://notebooklm.google.com/', icon: '📰', badge: 'Tổng hợp nội dung', color: 'text-amber-600' },
+                    { name: 'Google AI Studio', url: 'https://aistudio.google.com/', icon: '🎨', badge: 'Tùy chỉnh nội dung', color: 'text-rose-600' }
+                ]
+            },
+            voice: {
+                title: "4. Tạo giọng nói (TTS)",
+                desc: "Chuyển văn bản lịch sử thành giọng nói để tạo Podcast hoặc lồng tiếng cho video dự án.",
+                color: "bg-purple-50",
+                tools: [
+                    // ĐÃ XÁC NHẬN: Link Vibee AI
+                    { name: 'Vibee', url: 'https://vbee.vn/?srsltid=AfmBOooYmDrXIiIqmqnFTOj1JJESNs00L7dghThqPA-HCOrkBUA2e4zO', icon: '🎤', badge: 'TTS Việt Nam', color: 'text-purple-600' },
+                    // ĐÃ XÁC NHẬN: Link Google AI Studio
+                    { name: 'Google AI Studio', url: 'https://aistudio.google.com/', icon: '🎧', badge: 'API TTS', color: 'text-indigo-600' }
+                ]
+            },
+            video: {
+                title: "5. Tạo Video & Truyện tranh",
+                desc: "Sản xuất nội dung đa phương tiện hấp dẫn, biến lịch sử thành câu chuyện trực quan.",
+                color: "bg-red-50",
+                tools: [
+                    { name: 'CapCut', url: 'https://www.capcut.com/', icon: '🎬', badge: 'Editor phổ biến', color: 'text-pink-600' },
+                    // ĐÃ XÁC NHẬN: Link VivaVideo (Link Google Play cho Mobile App)
+                    { name: 'VivaVideo', url: 'https://play.google.com/store/apps/details?id=com.quvideo.xiaoying', icon: '🎥', badge: 'Mobile Video Editor', color: 'text-red-600' },
+                    { name: 'Canva', url: 'https://www.canva.com/', icon: '🖼️', badge: 'Đồ họa & Video', color: 'text-blue-600' },
+                    { name: 'Gemini', url: 'https://gemini.google.com/', icon: '✍️', badge: 'Viết kịch bản', color: 'text-indigo-600' }
+                ]
+            },
+            game: {
+                title: "6. Tạo trò chơi tương tác",
+                desc: "Thiết kế các trò chơi trắc nghiệm, nối cặp để ôn tập kiến thức một cách thú vị.",
+                color: "bg-cyan-50",
+                tools: [
+                    { name: 'Gemini', url: 'https://gemini.google.com/', icon: '🎲', badge: 'Ý tưởng/Kịch bản', color: 'text-indigo-600' },
+                    { name: 'Canva', url: 'https://www.canva.com/', icon: '🧩', badge: 'Thiết kế Game UI', color: 'text-blue-600' }
+                ]
+            },
+            slide: {
+                title: "7. Tạo Slide/Bản trình bày",
+                desc: "Tạo ra các bài thuyết trình chuyên nghiệp, thu hút người nghe.",
+                color: "bg-orange-50",
+                tools: [
+                    { name: 'PowerPoint', url: 'https://www.microsoft.com/en-ww/microsoft-365/powerpoint', icon: '📈', badge: 'Truyền thống', color: 'text-orange-600' },
+                    { name: 'Canva', url: 'https://www.canva.com/', icon: '✨', badge: 'Thiết kế đẹp', color: 'text-blue-600' },
+                    { name: 'Gamma', url: 'https://gamma.app/', icon: '💡', badge: 'AI Trình bày', color: 'text-yellow-600' }
+                ]
+            },
+            motion: {
+                title: "8. Tạo chuyển động nhân vật",
+                desc: "Làm sinh động các nhân vật lịch sử qua công nghệ tạo chuyển động AI.",
+                color: "bg-teal-50",
+                 // ĐÃ XÁC NHẬN: Link Haliou AI (Tìm kiếm Google)
+                tools: [
+                    { name: 'Haliou AI (Tìm kiếm)', url: 'https://www.google.com/search?q=Haliou+AI+motion+generator', icon: '👤', badge: 'Chuyển động AI (cập nhật)', color: 'text-teal-600' }
+                ]
+            }
+        };
+
+        // Hàm chung để chuyển đổi URL Google Drive sang nhúng iframe (dành cho các link nhúng video công khai)
+        function getEmbedUrl(url) {
+            const driveFileIdMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)\/view/);
+            if (driveFileIdMatch && url.includes('drive.google.com/file')) {
+                // Đây là link Google Drive, không thể nhúng iframe trực tiếp được do hạn chế bảo mật.
+                // Trả về null để hiển thị dưới dạng link click
+                return null;
+            }
+            // Logic cho các URL YouTube, nếu có
+            const youtubeMatch = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|\w\/\w|watch\?v=))([^&]+)/);
+            if (youtubeMatch) {
+                return `https://www.youtube.com/embed/${youtubeMatch[1]}`;
+            }
+            return null; // Trả về null nếu không phải YouTube
+        }
+
+        window.showSection = function(sectionId, navElement = null) {
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+
+            document.querySelectorAll('.nav-item').forEach(link => link.classList.remove('active'));
+            if (navElement) {
+                navElement.classList.add('active');
+            } else {
+                 // Highlight the nav item based on sectionId if called internally
+                document.querySelector(`.nav-item[onclick*="'${sectionId}'"]`)?.classList.add('active');
+            }
+             mobileMenu.classList.add('hidden');
+             
+             // Logic ẩn/hiện bộ đếm
+             const counterDisplay = document.getElementById('visit-counter-display');
+             
+             if (sectionId === 'digital-tools') {
+                 counterDisplay.classList.add('hidden');
+                 
+                 // KHỞI TẠO TRANG CÔNG CỤ SỐ: Tự động render nhóm đang được chọn
+                 const toolSelect = document.getElementById('tool-group-select');
+                 // Dùng giá trị mặc định 'search' nếu chưa có
+                 renderDigitalTools(toolSelect.value || 'search'); 
+             } else {
+                 counterDisplay.classList.remove('hidden');
+                 updateVisitCounter(sectionId); // Cập nhật và hiển thị khi không ở trang Công cụ số
+             }
+             
+             // Khởi tạo nội dung Học liệu số khi chuyển trang
+             if (sectionId === 'digital-learning') {
+                const dlMediaSelect = document.getElementById('dl-media-select');
+                // Gọi renderDigitalLearningContent dựa trên giá trị được chọn
+                renderDigitalLearningContent(dlMediaSelect.value || 'images'); 
+             }
+             // Khởi tạo nội dung Thuật ngữ khi chuyển trang
+             if (sectionId === 'glossary') {
+                 renderGlossary(glossaryTerms);
+             }
+             // Khởi tạo Triển lãm ảo
+             if (sectionId === 'exhibition') {
+                 renderExhibition();
+             }
+        };
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        function populateSelect(selectId) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+            select.innerHTML = '<option value="">-- Chọn bài học --</option>';
+            for (const key in lessonData) {
+                const option = document.createElement('option');
+                option.value = key;
+                option.textContent = lessonData[key].title;
+                select.appendChild(option);
+            }
+        }
+        
+        // Bỏ 'digital-learning-lesson-select' khỏi danh sách này
+        ['infographic-lesson-select', 'mindmap-lesson-select', 'quiz-lesson-select', 'game-lesson-select'].forEach(populateSelect);
+
+        function setupContentLoader(selectId, contentId, contentType) {
+            const select = document.getElementById(selectId);
+            const contentDiv = document.getElementById(contentId);
+            if (!select || !contentDiv) return;
+
+            select.addEventListener('change', function() {
+                const lessonKey = this.value;
+                if (!lessonKey) {
+                    contentDiv.innerHTML = `<p class="text-center">Vui lòng chọn một bài học để xem nội dung.</p>`;
+                    return;
+                }
+                
+                const lessonTheme = lessonData[lessonKey];
+                let contentHTML = '';
+
+                switch (contentType) {
+                    case 'infographic':
+                    case 'mindmap':
+                        const imageUrl = contentDB[contentType][lessonKey] || `https://placehold.co/800x600/${lessonKey === 'lesson1' ? 'e0f2fe' : 'ccc'}/000?text=${contentType.toUpperCase()}+${lessonTheme.id}`;
+                        contentHTML = `<div class="p-4 rounded-lg ${lessonTheme.color} min-h-[50vh]">
+                                        <h3 class="text-xl font-bold mb-4 ${lessonTheme.textColor}">${lessonTheme.title}</h3>
+                                        <img src="${imageUrl}" alt="${contentType} for ${lessonTheme.title}" class="mx-auto rounded-lg shadow-md w-full max-w-4xl h-auto">
+                                       </div>`;
+                        break;
+                    case 'games':
+                        // Placeholder logic for games
+                        contentHTML = `<p class="text-center p-4 rounded-lg ${lessonTheme.color} min-h-[50vh] ${lessonTheme.textColor}">Trò chơi cho ${lessonTheme.title} đang được cập nhật.</p>`;
+                        // Giả lập logic trò chơi cho Bài 1
+                        if (lessonKey === 'lesson1') {
+                            contentHTML = `<div class="p-4 rounded-lg ${lessonTheme.color} min-h-[50vh]">
+                                <h3 class="text-xl font-bold mb-4 ${lessonTheme.textColor}">Trò chơi: Nối cặp Thuật ngữ</h3>
+                                <p class="mb-6 text-gray-700">Hãy tìm đúng cặp Thuật ngữ - Định nghĩa về Cách mạng tư sản.</p>
+                                <p class="text-center text-red-500 font-medium">Chức năng trò chơi sẽ được phát triển chi tiết sau.</p>
+                            </div>`;
+                        }
+                        contentDiv.innerHTML = contentHTML;
+                        break;
+                }
+            });
+        }
+        
+        setupContentLoader('infographic-lesson-select', 'infographic-content', 'infographic');
+        setupContentLoader('mindmap-lesson-select', 'mindmap-content', 'mindmap');
+        setupContentLoader('game-lesson-select', 'game-content', 'games');
+
+        // --- Render Functions ---
+        function renderDigitalLearningContent(mediaType) {
+            const contentDiv = document.getElementById('digital-learning-content');
+            contentDiv.innerHTML = '';
+
+            const data = mediaType === 'images' ? allAggregatedImages : allAggregatedVideos;
+
+            if (data.length === 0) {
+                contentDiv.innerHTML = `<p class="text-center text-lg text-gray-500 mt-12">Chưa có ${mediaType === 'images' ? 'hình ảnh' : 'video'} nào được tổng hợp.</p>`;
+                return;
+            }
+
+            if (mediaType === 'images') {
+                let html = '<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">';
+                data.forEach(item => {
+                    html += `
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100 p-4">
+                            <div class="${item.color} ${item.textColor} font-semibold text-sm p-2 rounded-lg mb-2 text-center">
+                                ${item.lesson.split(': ')[0]}
+                            </div>
+                            <img src="${item.url}" alt="${item.title}" class="w-full h-48 object-cover rounded-lg mb-3 shadow-sm" onerror="this.onerror=null;this.src='https://placehold.co/600x400/ccc/333?text=Anh+Minh+hoa'">
+                            <p class="font-bold text-gray-800 text-center">${item.title}</p>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                contentDiv.innerHTML = html;
+
+            } else { // Videos
+                 let html = '<div class="grid md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">';
+                data.forEach(item => {
+                    html += `
+                        <div class="bg-white p-4 rounded-xl shadow-lg border-l-4 ${item.color.replace('-100', '-600')}">
+                            <p class="text-xs font-semibold ${item.textColor} mb-1">${item.lesson}</p>
+                            <p class="font-bold text-lg text-gray-800 mb-3">${item.title}</p>
+                            <!-- Nội dung video/link Google Drive -->
+                            <div class="max-w-3xl mx-auto">
+                                ${item.content}
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+                contentDiv.innerHTML = html;
+            }
+        }
+        
+        function renderGlossary(terms) {
+            const contentDiv = document.getElementById('glossary-content');
+            contentDiv.innerHTML = '';
+
+            if (terms.length === 0) {
+                contentDiv.innerHTML = '<p class="text-center text-gray-500 italic mt-12">Không tìm thấy thuật ngữ nào.</p>';
+                return;
+            }
+
+            terms.forEach(term => {
+                // Tạo một thẻ card mới theo cấu trúc 2 cột
+                const container = document.createElement('div');
+                container.className = 'term-container'; // CSS class đã được định nghĩa trong <style>
+
+                // Cột 1: Thuật ngữ (Key)
+                const keyDiv = document.createElement('div');
+                keyDiv.className = `term-card-key ${term.color}`; // Sử dụng màu nền đậm
+                keyDiv.innerHTML = term.term; // Nội dung Thuật ngữ
+                
+                // Cột 2: Định nghĩa (Definition)
+                const defDiv = document.createElement('div');
+                defDiv.className = 'term-card-def';
+                defDiv.innerHTML = term.def; // Nội dung Định nghĩa
+                
+                container.appendChild(keyDiv);
+                container.appendChild(defDiv);
+                contentDiv.appendChild(container);
+            });
+        }
+
+        // Logic Tìm kiếm Thuật ngữ
+        document.getElementById('glossary-search').addEventListener('input', function() {
+            const query = this.value.toLowerCase().trim();
+            const filteredTerms = glossaryTerms.filter(term => 
+                term.term.toLowerCase().includes(query) || 
+                term.def.toLowerCase().includes(query)
+            );
+            renderGlossary(filteredTerms);
+        });
+        // --- End Render Functions ---
+        
+
+        // Event listener cho Dropdown Học liệu số
+        document.getElementById('dl-media-select').addEventListener('change', (e) => renderDigitalLearningContent(e.target.value));
+
+        // Event listener cho Dropdown Công cụ số
+        document.getElementById('tool-group-select').addEventListener('change', (e) => renderDigitalTools(e.target.value));
+
+        // --- Logic khởi tạo khác (Exhibition, Tools) giữ nguyên ---
+
+        function renderExhibition() {
+            const gallery = document.getElementById('exhibition-gallery');
+            gallery.innerHTML = '';
+            
+            exhibitionProjects.forEach(project => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300';
+                card.innerHTML = `
+                    <img src="${project.image}" alt="${project.title}" class="w-full h-48 object-cover">
+                    <div class="p-5">
+                        <h3 class="text-xl font-bold text-amber-700 mb-1">${project.title}</h3>
+                        <p class="text-sm font-medium text-gray-600 mb-3">Tác giả: ${project.author}</p>
+                        <p class="text-sm text-gray-700">${project.description}</p>
+                    </div>
+                `;
+                gallery.appendChild(card);
+            });
+        }
+
+        function renderDigitalTools(groupKey) {
+            const contentDiv = document.getElementById('digital-tools-content');
+            contentDiv.innerHTML = '';
+
+            const group = digitalTools[groupKey];
+            if (!group) {
+                 contentDiv.innerHTML = '<p class="text-center text-gray-500 italic mt-12">Vui lòng chọn một nhóm công cụ từ hộp thả xuống để xem chi tiết.</p>';
+                return;
+            }
+
+            let html = `
+                <div class="mb-6 p-4 rounded-xl ${group.color} border border-gray-200">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-2">${group.title}</h3>
+                    <p class="text-gray-600">${group.desc}</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-6">
+            `;
+            
+            group.tools.forEach(tool => {
+                html += `
+                    <div class="tool-card bg-white p-5 rounded-xl shadow-lg flex flex-col items-start justify-between border border-gray-100 hover:border-amber-400 transition transform">
+                        <div>
+                            <div class="flex items-center space-x-4 mb-2">
+                                <div class="text-3xl">${tool.icon}</div>
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-semibold ${tool.color} bg-opacity-10 py-0.5 px-2 rounded-full border ${tool.color.replace('text', 'border')}">${tool.badge}</span>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Sử dụng công cụ này để thực hiện nhiệm vụ ${group.title.split('.')[0].toLowerCase()}.</p>
+                        </div>
+                        
+                        <!-- LIÊN KẾT NỔI BẬT THEO YÊU CẦU -->
+                        <a href="${tool.url}" target="_blank" class="tool-link text-lg flex items-center">
+                            ${tool.name} &rarr;
+                        </a>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            contentDiv.innerHTML = html;
+        }
+
+        // Quiz and Game Placeholder Logic
+        document.getElementById('start-quiz-btn').addEventListener('click', () => {
+            const lessonKey = document.getElementById('quiz-lesson-select').value;
+            if (lessonKey) {
+                 document.getElementById('quiz-lesson-title').textContent = lessonData[lessonKey].title;
+                 document.getElementById('quiz-selection-view').classList.add('hidden');
+                 document.getElementById('quiz-main-view').classList.remove('hidden');
+                 document.getElementById('quiz-question-container').innerHTML = '<p class="text-center text-lg text-amber-600">Chức năng trắc nghiệm đang được xây dựng cho bài này.</p>';
+            } else {
+                 alert('Vui lòng chọn bài học!');
+            }
+        });
+        document.getElementById('quiz-back-btn').addEventListener('click', () => {
+             document.getElementById('quiz-selection-view').classList.remove('hidden');
+             document.getElementById('quiz-main-view').classList.add('hidden');
+        });
+         document.getElementById('game-lesson-select').addEventListener('change', (e) => {
+            const lessonKey = e.target.value;
+            const gameContent = document.getElementById('game-content');
+            if (lessonKey) {
+                gameContent.innerHTML = `<p class="text-center text-lg text-amber-600 mt-6">Trò chơi tương tác cho ${lessonData[lessonKey].title} đang được phát triển.</p>`;
+            } else {
+                gameContent.innerHTML = '<p class="text-center">Vui lòng chọn một bài học để bắt đầu trò chơi.</p>';
+            }
+        });
+
+        // Visit Counter Logic
+        function updateVisitCounter(pageId) {
+            const display = document.getElementById('page-visits');
+            if (pageId === 'home') {
+                 // Dùng key riêng cho home để tránh bị tính vào lượt truy cập trang phụ chung
+                 localStorage.setItem('page_visits_home', (parseInt(localStorage.getItem('page_visits_home') || 0) + 1));
+                 display.textContent = parseInt(localStorage.getItem('page_visits_home')).toLocaleString('vi-VN');
+            } else {
+                let visits = parseInt(localStorage.getItem('page_visits_' + pageId) || 0) + 1;
+                localStorage.setItem('page_visits_' + pageId, visits);
+                display.textContent = visits.toLocaleString('vi-VN');
+            }
+        }
+
+        // Initial setup for all sections
+        // Khởi tạo các dropdown chọn bài học
+        function initializeLessonSelectors() {
+             ['infographic-lesson-select', 'mindmap-lesson-select', 'quiz-lesson-select', 'game-lesson-select'].forEach(populateSelect);
+             // Thiết lập giá trị mặc định cho Học liệu số
+             document.getElementById('dl-media-select').value = 'videos';
+        }
+        initializeLessonSelectors();
+        
+        // Mặc định hiển thị trang chủ khi tải lần đầu
+        showSection('home', document.querySelector('[onclick*="home"]'));
+
+    });
+</script>
+</body>
+</html>
